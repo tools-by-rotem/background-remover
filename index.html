@@ -69,19 +69,28 @@
             display: none;
             margin-top: 10px;
         }
-        #downloadBtn {
+        #downloadBtn, #resetBtn {
             display: none;
             margin: 20px auto;
             padding: 10px 20px;
-            background-color: #ffc107;
-            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+        #downloadBtn {
+            background-color: #ffc107;
+            color: white;
+        }
         #downloadBtn:hover {
             background-color: #e0a800;
+        }
+        #resetBtn {
+            background-color: #dc3545;
+            color: white;
+        }
+        #resetBtn:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
@@ -94,6 +103,7 @@
         <button id="removeBgBtn">הסרת רקע</button>
         <img id="outputImage" alt="כאן תופיע התוצאה" />
         <button id="downloadBtn">הורדת תמונה ללא רקע</button>
+        <button id="resetBtn">הסרת רקע מתמונה נוספת</button>
         <p id="loading">מעבד את התמונה...</p>
     </div>
 
@@ -102,6 +112,7 @@
         const previewImage = document.getElementById("previewImage");
         const outputImage = document.getElementById("outputImage");
         const downloadBtn = document.getElementById("downloadBtn");
+        const resetBtn = document.getElementById("resetBtn");
 
         inputFile.addEventListener("change", function() {
             const file = inputFile.files[0];
@@ -126,6 +137,7 @@
             document.getElementById("loading").style.display = "block";
             outputImage.style.display = "none";
             downloadBtn.style.display = "none";
+            resetBtn.style.display = "none";
 
             const formData = new FormData();
             formData.append("image_file", file);
@@ -151,6 +163,7 @@
             outputImage.src = imgUrl;
             outputImage.style.display = "block";
             downloadBtn.style.display = "block";
+            resetBtn.style.display = "block";
 
             downloadBtn.addEventListener("click", function() {
                 const a = document.createElement("a");
@@ -160,6 +173,15 @@
                 a.click();
                 document.body.removeChild(a);
             });
+        });
+
+        resetBtn.addEventListener("click", function() {
+            // איפוס כל התצוגות
+            previewImage.style.display = "none";
+            outputImage.style.display = "none";
+            downloadBtn.style.display = "none";
+            inputFile.value = "";  // איפוס שדה הקלט של קובץ
+            resetBtn.style.display = "none";
         });
     </script>
 </body>
